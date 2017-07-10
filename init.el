@@ -20,7 +20,7 @@
   (fringe-mode 0)
   (column-number-mode t)
   (setq inhibit-startup-message t)
-  (set-face-attribute 'default nil :family "VL Gothic" :height 90)
+  (set-face-attribute 'default nil :family "VL Gothic" :height 120)
   (setq-default line-spacing 1)
   (custom-set-faces
    '(default ((t (:background "#300a24" :foreground "white"))))))
