@@ -21,7 +21,7 @@
   (column-number-mode t)
   (setq inhibit-startup-message t)
   (set-face-attribute 'default nil :family "VL Gothic" :height 120)
-  (setq-default line-spacing 1)
+  (setq-default line-spacing 2)
   (custom-set-faces
    '(default ((t (:background "#300a24" :foreground "white"))))))
 
@@ -35,6 +35,13 @@
   (setq auto-save-default nil)
   (setq x-select-enable-clipboard t)
   (add-hook 'before-save-hook 'delete-trailing-whitespace))
+
+;; インデントを設定します。
+
+(defun init-indent ()
+  (setq c-basic-offset    2)
+  (setq css-indent-offset 2)
+  (setq js-indent-level   2))
 
 ;; キーボードを設定します。
 
@@ -68,6 +75,7 @@
   (setq nrepl-hide-special-buffers t)
   (setq cider-repl-display-help-banner nil)
   (setq cider-show-error-buffer nil)
+  (setq cider-lein-parameters "repl :headless :host localhost")
   (define-clojure-indent
     (apply                 1)
     ;; for compojure
@@ -89,7 +97,8 @@
 
 (defun init-elpy ()
   (elpy-enable)
-  (pyvenv-activate "~/Documents/Projects/python_ws"))
+  (setq elpy-rpc-python-command "python3")
+  (setq python-shell-interpreter "python3"))
 
 ;; markdown-modeを設定します。
 
@@ -104,6 +113,7 @@
 (init-language)
 (init-appearance)
 (init-behavior)
+(init-indent)
 (init-keyboard)
 (init-input-method)
 (init-helm)
