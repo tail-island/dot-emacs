@@ -1,3 +1,14 @@
+;; 機種を判定します。
+
+(defvar mac?
+  (eq system-type 'darwin))
+
+(defvar linux?
+  (eq system-type 'gnu/linux))
+
+(defvar windows?
+  (eq system-type 'windows-nt))
+
 ;; packageを設定します。
 
 (defun init-package ()
@@ -7,11 +18,24 @@
 
 ;; 言語を設定します。
 
+(defun set-language-for-windows ()
+  (setq default-file-name-coding-system 'cp932))
+
 (defun init-language ()
   (set-language-environment "Japanese")
-  (prefer-coding-system 'utf-8))
+  (prefer-coding-system 'utf-8)
+  (when windows?
+    (set-language-for-windows)))
 
 ;; 見た目を設定します。
+
+(defun init-appearance-for-linux ()
+  (custom-set-faces
+   '(default ((t (:background "#300a24" :foreground "white"))))))
+
+(defun init-appearance-for-windows ()
+  (custom-set-faces
+   '(default ((t (:background "black" :foreground "white"))))))
 
 (defun init-appearance ()
   (menu-bar-mode 0)
@@ -20,12 +44,17 @@
   (fringe-mode 0)
   (column-number-mode t)
   (setq inhibit-startup-message t)
-  (set-face-attribute 'default nil :family "VL Gothic" :height 120)
+  (set-face-attribute 'default nil :family "VL Gothic" :height 90)
   (setq-default line-spacing 2)
-  (custom-set-faces
-   '(default ((t (:background "#300a24" :foreground "white"))))))
+  (when linux?
+    (init-appearance-for-linux))
+  (when windows?
+    (init-appearance-for-windows)))
 
 ;; 動作を設定します。
+
+(defun init-behavior-for-linux ()
+  (setq x-select-enable-clipboard t))
 
 (defun init-behavior ()
   (setq inhibit-startup-message t)
@@ -33,8 +62,9 @@
   (setq-default indent-tabs-mode nil)
   (setq make-backup-files nil)
   (setq auto-save-default nil)
-  (setq x-select-enable-clipboard t)
-  (add-hook 'before-save-hook 'delete-trailing-whitespace))
+  (add-hook 'before-save-hook 'delete-trailing-whitespace)
+  (when linux?
+    (init-behavior-for-linux)))
 
 ;; インデントを設定します。
 
@@ -45,6 +75,11 @@
 
 ;; キーボードを設定します。
 
+(defun init-keyboard-for-linux ()
+  (define-key global-map (kbd "<mouse-6>") 'scroll-right)
+  (define-key global-map (kbd "<mouse-7>") 'scroll-left)
+  (put 'scroll-left 'disabled nil))
+
 (defun init-keyboard ()
   (define-key global-map (kbd "RET") 'newline-and-indent)
   (define-key global-map (kbd "C-t") 'toggle-truncate-lines)
@@ -52,15 +87,26 @@
   (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
   (require 'dired)
   (define-key dired-mode-map (kbd "C-o") 'other-window)
-  (define-key global-map (kbd "<mouse-6>") 'scroll-right)
-  (define-key global-map (kbd "<mouse-7>") 'scroll-left)
-  (put 'scroll-left 'disabled nil))
+  (when linux?
+    (init-keyboard-for-linux)))
 
 ;; Input Methodを設定します。
 
-(defun init-input-method ()
+(defun init-input-method-for-linux ()
   (require 'mozc)
   (setq default-input-method "japanese-mozc"))
+
+(defun init-input-method-for-windows ()
+  (setq default-input-method "W32-IME")
+  (setq-default w32-ime-mode-line-state-indicator "[--]")
+  (setq w32-ime-mode-line-state-indicator-list '("[--]" "[あ]" "[--]"))
+  (w32-ime-initialize))
+
+(defun init-input-method ()
+  (when linux?
+    (init-input-method-for-linux))
+  (when windows?
+    (init-input-method-for-windows)))
 
 ;; helmを設定します。
 
@@ -117,7 +163,7 @@
 (init-keyboard)
 (init-input-method)
 (init-helm)
-;; (init-clojure-mode)
-;; (init-c++-mode)
-;; (init-elpy)
+(init-clojure-mode)
+(init-c++-mode)
+(init-elpy)
 (init-markdown-mode)
