@@ -30,12 +30,12 @@
 ;; 見た目を設定します。
 
 (defun init-appearance-for-linux ()
-  (set-face-attribute 'default nil :family "VL Gothic" :height 120)  ; Linuxでは、スケーリング1.0（もしくは0.875）で運用します。解像度が低い場合は120 * 0.875 = 105になって、全角と半角の比率が2:1になってキレイ。
+  (set-face-attribute 'default nil :family "VL Gothic" :height 120)  ; Linuxは、スケーリング1.0（もしくは0.875）で運用します。解像度が低い場合は120 * 0.875 = 105になって、全角と半角の比率が2:1になってキレイ。
   (custom-set-faces
    '(default ((t (:background "#300a24" :foreground "white"))))))
 
 (defun init-appearance-for-windows ()
-  (set-face-attribute 'default nil :family "VL Gothic" :height 96)   ; Windowsでは、スケーリング1.25で運用します。96 * 1.25 = 120になって、全角と半角の比率が2:1になってキレイ。
+  (set-face-attribute 'default nil :family "VL Gothic" :height 96)   ; Windowsは、スケーリング1.25で運用します。96 * 1.25 = 120になって、全角と半角の比率が2:1になってキレイ。
   (custom-set-faces
    '(default ((t (:background "black" :foreground "white"))))))
 
