@@ -35,7 +35,7 @@
    '(default ((t (:background "#300a24" :foreground "white"))))))
 
 (defun init-appearance-for-windows ()
-  (set-face-attribute 'default nil :family "VL Gothic" :height 96)
+  (set-face-attribute 'default nil :family "VL Gothic" :height 96)  ; 125%にスケーリングするため。0.96 * 1.25 = 1.20で結構キレイ。
   (custom-set-faces
    '(default ((t (:background "black" :foreground "white"))))))
 
