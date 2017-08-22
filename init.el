@@ -30,10 +30,12 @@
 ;; 見た目を設定します。
 
 (defun init-appearance-for-linux ()
+  (set-face-attribute 'default nil :family "VL Gothic" :height 90)
   (custom-set-faces
    '(default ((t (:background "#300a24" :foreground "white"))))))
 
 (defun init-appearance-for-windows ()
+  (set-face-attribute 'default nil :family "VL Gothic" :height 96)
   (custom-set-faces
    '(default ((t (:background "black" :foreground "white"))))))
 
@@ -44,7 +46,6 @@
   (fringe-mode 0)
   (column-number-mode t)
   (setq inhibit-startup-message t)
-  (set-face-attribute 'default nil :family "VL Gothic" :height 90)
   (setq-default line-spacing 2)
   (when linux?
     (init-appearance-for-linux))
