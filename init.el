@@ -142,10 +142,14 @@
 
 ;; elpyを設定します。
 
+(defun init-elpy-for-windows ()
+  (setq python-shell-completion-native-enable nil))
+
 (defun init-elpy ()
   (elpy-enable)
-  (setq elpy-rpc-python-command "python3")
-  (setq python-shell-interpreter "python3"))
+  (pyvenv-activate "~/Documents/Projects/python-cpu")
+  (if windows?
+      (init-elpy-for-windows)))
 
 ;; markdown-modeを設定します。
 
