@@ -1,8 +1,8 @@
 (defvar packages
   '(cider
-    clj-refactor
     clojure-mode
     elpy
+    exec-path-from-shell
     helm
     markdown-mode))
 

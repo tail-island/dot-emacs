@@ -1,10 +1,10 @@
 ;; 機種を判定します。
 
-(defvar mac?
-  (eq system-type 'darwin))
-
 (defvar linux?
   (eq system-type 'gnu/linux))
+
+(defvar mac?
+  (eq system-type 'darwin))
 
 (defvar windows?
   (eq system-type 'windows-nt))
@@ -16,14 +16,29 @@
   (add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
   (package-initialize))
 
+;; PATHを設定します。
+
+(defun init-exec-path-for-mac ()
+  (exec-path-from-shell-initialize))
+
+(defun init-exec-path ()
+  (when mac?
+    (init-exec-path-for-mac)))
+
 ;; 言語を設定します。
 
+(defun set-language-for-mac ()
+  ;; (require 'ucs-normalize)
+  (set-file-name-coding-system 'utf-8-hfs))
+
 (defun set-language-for-windows ()
-  (setq default-file-name-coding-system 'cp932))
+  (set-file-name-coding-system 'cp932))
 
 (defun init-language ()
   (set-language-environment "Japanese")
   (prefer-coding-system 'utf-8)
+  (when mac?
+    (set-language-for-mac))
   (when windows?
     (set-language-for-windows)))
 
@@ -33,6 +48,10 @@
   (set-face-attribute 'default nil :family "VL Gothic" :height 120)  ; Linuxは、スケーリング1.0（もしくは0.875）で運用します。解像度が低い場合は120 * 0.875 = 105になって、全角と半角の比率が2:1になってキレイ。
   (custom-set-faces
    '(default ((t (:background "#300a24" :foreground "white"))))))
+
+(defun init-appearance-for-mac ()
+  (set-face-attribute 'default nil :family "Ricty Diminished" :height 120)
+  (set-fontset-font (frame-parameter nil 'font) 'japanese-jisx0208 (font-spec :family "Ricty Diminished")))
 
 (defun init-appearance-for-windows ()
   (set-face-attribute 'default nil :family "VL Gothic" :height 96)   ; Windowsは、スケーリング1.25で運用します。96 * 1.25 = 120になって、全角と半角の比率が2:1になってキレイ。
@@ -49,6 +68,8 @@
   (setq-default line-spacing 2)
   (when linux?
     (init-appearance-for-linux))
+  (when mac?
+    (init-appearance-for-mac))
   (when windows?
     (init-appearance-for-windows)))
 
@@ -81,6 +102,11 @@
   (define-key global-map (kbd "<mouse-7>") 'scroll-left)
   (put 'scroll-left 'disabled nil))
 
+(defun init-keyboard-for-mac ()
+  (define-key global-map (kbd "M-c") 'kill-ring-save)  ; Karabiner-ElementsがM-wをM-cに割り当てるので、再割当てします。
+  (setq ns-command-modifier   'meta)
+  (setq ns-alternate-modifier 'super))
+
 (defun init-keyboard ()
   (define-key global-map (kbd "RET") 'newline-and-indent)
   (define-key global-map (kbd "C-t") 'toggle-truncate-lines)
@@ -89,13 +115,18 @@
   (require 'dired)
   (define-key dired-mode-map (kbd "C-o") 'other-window)
   (when linux?
-    (init-keyboard-for-linux)))
+    (init-keyboard-for-linux))
+  (when mac?
+    (init-keyboard-for-mac)))
 
 ;; Input Methodを設定します。
 
 (defun init-input-method-for-linux ()
   (require 'mozc)
   (setq default-input-method "japanese-mozc"))
+
+(defun init-input-method-for-mac ()
+  (setq default-input-method "MacOSX"))
 
 (defun init-input-method-for-windows ()
   (setq default-input-method "W32-IME")
@@ -106,6 +137,8 @@
 (defun init-input-method ()
   (when linux?
     (init-input-method-for-linux))
+  (when mac?
+    (init-input-method-for-mac))
   (when windows?
     (init-input-method-for-windows)))
 
@@ -124,11 +157,7 @@
   (setq cider-show-error-buffer nil)
   (setq cider-lein-parameters "repl :headless :host localhost")
   (define-clojure-indent
-    (apply                 1)
-    ;; for compojure
-    (defroutes             'defun)
-    (context               2)
-    ))
+    (apply 1)))
 
 ;; c++-modeを設定します。
 
@@ -161,6 +190,7 @@
             'markdown-mode-hook-handler))
 
 (init-package)
+(init-exec-path)
 (init-language)
 (init-appearance)
 (init-behavior)
