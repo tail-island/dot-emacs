@@ -45,7 +45,8 @@
 ;; 見た目を設定します。
 
 (defun init-appearance-for-linux ()
-  (set-face-attribute 'default nil :family "VL Gothic" :height 120)  ; Linuxは、スケーリング1.0（もしくは0.875）で運用します。解像度が低い場合は120 * 0.875 = 105になって、全角と半角の比率が2:1になってキレイ。
+  (set-face-attribute 'default nil :family "Ricty Diminished" :height 120)  ; Linuxは、スケーリング1.0（もしくは0.875）で運用します。解像度が低い場合は120 * 0.875 = 105になって、全角と半角の比率が2:1になってキレイ。
+  (set-fontset-font (frame-parameter nil 'font) 'japanese-jisx0208 (font-spec :family "Ricty Diminished"))
   (custom-set-faces
    '(default ((t (:background "#300a24" :foreground "white"))))))
 
