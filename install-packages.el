@@ -1,9 +1,11 @@
 (defvar packages
   '(cider
     clojure-mode
+    csharp-mode
     elpy
     exec-path-from-shell
     helm
+    kotlin-mode
     markdown-mode))
 
 (defun install-packages ()
@@ -14,7 +16,7 @@
 
 (defun init-package ()
   (require 'package)
-  (add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
   (package-initialize))
 
 (init-package)

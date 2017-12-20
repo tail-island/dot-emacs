@@ -13,7 +13,7 @@
 
 (defun init-package ()
   (require 'package)
-  (add-to-list 'package-archives '("melpa-stable" . "http://melpa-stable.milkbox.net/packages/"))
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
   (package-initialize))
 
 ;; PATHを設定します。
@@ -52,7 +52,7 @@
 
 (defun init-appearance-for-mac ()
   (set-face-attribute 'default nil :family "Ricty Diminished" :height 120)
-  (set-fontset-font (frame-parameter nil 'font) 'japanese-jisx0208 (font-spec :family "Ricty Diminished")))
+  (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Ricty Diminished")))
 
 (defun init-appearance-for-windows ()
   (set-face-attribute 'default nil :family "VL Gothic" :height 96)   ; Windowsは、スケーリング1.25で運用します。96 * 1.25 = 120になって、全角と半角の比率が2:1になってキレイ。
@@ -170,6 +170,15 @@
   (add-hook 'c++-mode-hook
             'c++-mode-hook-handler))
 
+;; kotlin-modeを設定します。
+
+(defun kotlin-mode-hook-handler ()
+  (setq kotlin-tab-width 4))
+
+(defun init-kotlin-mode ()
+  (add-hook 'kotlin-mode-hook
+            'kotlin-mode-hook-handler))
+
 ;; elpyを設定します。
 
 (defun init-elpy-for-windows ()
@@ -200,6 +209,7 @@
 (init-input-method)
 (init-helm)
 (init-clojure-mode)
+(init-kotlin-mode)
 (init-c++-mode)
 (init-elpy)
 (init-markdown-mode)
