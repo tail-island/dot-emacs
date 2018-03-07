@@ -5,6 +5,7 @@
     elpy
     exec-path-from-shell
     helm
+    js2-mode
     kotlin-mode
     markdown-mode))
 

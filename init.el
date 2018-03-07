@@ -28,7 +28,7 @@
 ;; 言語を設定します。
 
 (defun set-language-for-mac ()
-  ;; (require 'ucs-normalize)
+  ;; (require 'ucs-normalize) 
   (set-file-name-coding-system 'utf-8-hfs))
 
 (defun set-language-for-windows ()
@@ -160,24 +160,11 @@
   (define-clojure-indent
     (apply 1)))
 
-;; c++-modeを設定します。
+;; js2-modeを設定します。
 
-(defun c++-mode-hook-handler ()
-  (c-set-style "bsd")
-  (setq c-basic-offset 2))
-
-(defun init-c++-mode ()
-  (add-hook 'c++-mode-hook
-            'c++-mode-hook-handler))
-
-;; kotlin-modeを設定します。
-
-(defun kotlin-mode-hook-handler ()
-  (setq kotlin-tab-width 4))
-
-(defun init-kotlin-mode ()
-  (add-hook 'kotlin-mode-hook
-            'kotlin-mode-hook-handler))
+(defun init-js2-mode ()
+  (add-to-list 'auto-mode-alist '("\\.js"  . js2-mode))
+  (add-to-list 'auto-mode-alist '("\\.mjs" . js2-mode)))
 
 ;; elpyを設定します。
 
@@ -189,6 +176,25 @@
   (pyvenv-activate "~/Documents/Projects/python")
   (if windows?
       (init-elpy-for-windows)))
+
+;; kotlin-modeを設定します。
+
+(defun kotlin-mode-hook-handler ()
+  (setq kotlin-tab-width 4))
+
+(defun init-kotlin-mode ()
+  (add-hook 'kotlin-mode-hook
+            'kotlin-mode-hook-handler))
+
+;; c++-modeを設定します。
+
+(defun c++-mode-hook-handler ()
+  (c-set-style "bsd")
+  (setq c-basic-offset 2))
+
+(defun init-c++-mode ()
+  (add-hook 'c++-mode-hook
+            'c++-mode-hook-handler))
 
 ;; markdown-modeを設定します。
 
@@ -209,7 +215,8 @@
 (init-input-method)
 (init-helm)
 (init-clojure-mode)
+(init-js2-mode)
+(init-elpy)
 (init-kotlin-mode)
 (init-c++-mode)
-(init-elpy)
 (init-markdown-mode)
