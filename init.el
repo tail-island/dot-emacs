@@ -18,17 +18,22 @@
 
 ;; PATHを設定します。
 
+(defun init-exec-path-for-linux ()
+  (exec-path-from-shell-initialize))
+
 (defun init-exec-path-for-mac ()
   (exec-path-from-shell-initialize))
 
 (defun init-exec-path ()
+  (when linux?
+    (init-exec-path-for-linux))
   (when mac?
     (init-exec-path-for-mac)))
 
 ;; 言語を設定します。
 
 (defun set-language-for-mac ()
-  ;; (require 'ucs-normalize) 
+  ;; (require 'ucs-normalize)
   (set-file-name-coding-system 'utf-8-hfs))
 
 (defun set-language-for-windows ()
@@ -45,8 +50,8 @@
 ;; 見た目を設定します。
 
 (defun init-appearance-for-linux ()
-  (set-face-attribute 'default nil :family "Ricty Diminished" :height 120)  ; Linuxは、スケーリング1.0（もしくは0.875）で運用します。解像度が低い場合は120 * 0.875 = 105になって、全角と半角の比率が2:1になってキレイ。
-  (set-fontset-font (frame-parameter nil 'font) 'japanese-jisx0208 (font-spec :family "Ricty Diminished"))
+  (set-face-attribute 'default nil :family "VL Gothic" :height 140)  ; Linuxは、スケーリング1.0（もしくは0.875）で運用します。解像度が低い場合は120 * 0.875 = 105になって、全角と半角の比率が2:1になってキレイ。
+  (set-fontset-font (frame-parameter nil 'font) 'japanese-jisx0208 (font-spec :family "VL Gothic"))
   (custom-set-faces
    '(default ((t (:background "#300a24" :foreground "white"))))))
 
@@ -177,14 +182,18 @@
   (if windows?
       (init-elpy-for-windows)))
 
-;; kotlin-modeを設定します。
+;; enh-ruby-modeを設定します。
 
-(defun kotlin-mode-hook-handler ()
-  (setq kotlin-tab-width 4))
+(defun init-enh-ruby-mode ()
+  ;; (setq enh-ruby-program "/home/ryo/.rbenv/shims/ruby")
+  (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
+  (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
+  (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode))
 
-(defun init-kotlin-mode ()
-  (add-hook 'kotlin-mode-hook
-            'kotlin-mode-hook-handler))
+;; projectile-railsを設定します。
+
+(defun init-pojrectile-rails ()
+  (add-hook 'projectile-mode-hook 'projectile-rails-on))
 
 ;; c++-modeを設定します。
 
@@ -202,6 +211,7 @@
   (auto-fill-mode 0))
 
 (defun init-markdown-mode ()
+  (projectile-global-mode)
   (add-hook 'markdown-mode-hook
             'markdown-mode-hook-handler))
 
@@ -217,6 +227,6 @@
 (init-clojure-mode)
 (init-js2-mode)
 (init-elpy)
-(init-kotlin-mode)
+(init-enh-ruby-mode)
 (init-c++-mode)
 (init-markdown-mode)

@@ -1,13 +1,14 @@
 (defvar packages
   '(cider
     clojure-mode
-    csharp-mode
     elpy
+    enh-ruby-mode
     exec-path-from-shell
     helm
     js2-mode
-    kotlin-mode
-    markdown-mode))
+    markdown-mode
+    projectile
+    projectile-rails))
 
 (defun install-packages ()
   (package-refresh-contents)
