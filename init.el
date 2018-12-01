@@ -154,6 +154,17 @@
   (define-key global-map (kbd "C-;") 'helm-for-files)
   (put 'upcase-region 'disabled nil))
 
+;; haskell-modeを設定します。
+
+(defun init-haskell-mode ()
+  (setq haskell-process-type 'stack-ghci)
+  (setq haskell-process-path-ghci "stack")
+  (setq haskell-process-args-ghci "ghci")
+  (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
+  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+  (add-hook 'haskell-mode-hook 'haskell-decl-scan-mode)
+  (add-hook 'haskell-mode-hook 'haskell-doc-mode))
+
 ;; clojure-modeを設定します。
 
 (defun init-clojure-mode ()
@@ -193,6 +204,7 @@
 ;; projectile-railsを設定します。
 
 (defun init-pojrectile-rails ()
+  (projectile-global-mode)
   (add-hook 'projectile-mode-hook 'projectile-rails-on))
 
 ;; c++-modeを設定します。
@@ -211,7 +223,6 @@
   (auto-fill-mode 0))
 
 (defun init-markdown-mode ()
-  (projectile-global-mode)
   (add-hook 'markdown-mode-hook
             'markdown-mode-hook-handler))
 
@@ -224,9 +235,10 @@
 (init-keyboard)
 (init-input-method)
 (init-helm)
-(init-clojure-mode)
+(init-haskell-mode)
+;; (init-clojure-mode)
 (init-js2-mode)
 (init-elpy)
-(init-enh-ruby-mode)
+;; (init-enh-ruby-mode)
 (init-c++-mode)
 (init-markdown-mode)
