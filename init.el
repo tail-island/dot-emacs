@@ -25,8 +25,8 @@
   (exec-path-from-shell-initialize))
 
 (defun init-exec-path ()
-  (when linux?
-    (init-exec-path-for-linux))
+  ;; (when linux?
+  ;;   (init-exec-path-for-linux))
   (when mac?
     (init-exec-path-for-mac)))
 
@@ -50,10 +50,10 @@
 ;; 見た目を設定します。
 
 (defun init-appearance-for-linux ()
-  (set-face-attribute 'default nil :family "VL Gothic" :height 140)  ; Linuxは、スケーリング1.0（もしくは0.875）で運用します。解像度が低い場合は120 * 0.875 = 105になって、全角と半角の比率が2:1になってキレイ。
-  (set-fontset-font (frame-parameter nil 'font) 'japanese-jisx0208 (font-spec :family "VL Gothic"))
+  (set-face-attribute 'default nil :family "Ricty Diminished" :height 120)  ; Linuxは、スケーリング1.0（もしくは0.875）で運用します。解像度が低い場合は120 * 0.875 = 105になって、全角と半角の比率が2:1になってキレイ。
+  (set-fontset-font (frame-parameter nil 'font) 'japanese-jisx0208 (font-spec :family "Ricty Diminished"))
   (custom-set-faces
-   '(default ((t (:background "#300a24" :foreground "white"))))))
+   '(default ((t (:background "black" :foreground "white"))))))
 
 (defun init-appearance-for-mac ()
   (set-face-attribute 'default nil :family "Ricty Diminished" :height 120)
@@ -189,7 +189,7 @@
 
 (defun init-elpy ()
   (elpy-enable)
-  (pyvenv-activate "~/Documents/Projects/python")
+  (pyvenv-activate "~/Documents/Environments/python")
   (if windows?
       (init-elpy-for-windows)))
 
@@ -227,7 +227,7 @@
             'markdown-mode-hook-handler))
 
 (init-package)
-(init-exec-path)
+;; (init-exec-path)
 (init-language)
 (init-appearance)
 (init-behavior)

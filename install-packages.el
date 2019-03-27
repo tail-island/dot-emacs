@@ -1,6 +1,5 @@
 (defvar packages
   '(elpy
-    exec-path-from-shell
     haskell-mode
     helm
     js2-mode
