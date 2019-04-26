@@ -1,5 +1,6 @@
 (defvar packages
   '(elpy
+    enh-ruby-mode
     haskell-mode
     helm
     js2-mode

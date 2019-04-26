@@ -50,8 +50,8 @@
 ;; 見た目を設定します。
 
 (defun init-appearance-for-linux ()
-  (set-face-attribute 'default nil :family "Ricty Diminished" :height 120)  ; Linuxは、スケーリング1.0（もしくは0.875）で運用します。解像度が低い場合は120 * 0.875 = 105になって、全角と半角の比率が2:1になってキレイ。
-  (set-fontset-font (frame-parameter nil 'font) 'japanese-jisx0208 (font-spec :family "Ricty Diminished"))
+  (set-face-attribute 'default nil :family "Noto Sans Mono CJK JP" :height 120)  ; Linuxは、スケーリング1.0（もしくは0.875）で運用します。解像度が低い場合は120 * 0.875 = 105になって、全角と半角の比率が2:1になってキレイ。
+  (set-fontset-font (frame-parameter nil 'font) 'japanese-jisx0208 (font-spec :family "Noto Sans Mono CJK JP"))
   (custom-set-faces
    '(default ((t (:background "black" :foreground "white"))))))
 
@@ -129,7 +129,8 @@
 
 (defun init-input-method-for-linux ()
   (require 'mozc)
-  (setq default-input-method "japanese-mozc"))
+  (setq default-input-method "japanese-mozc")
+  (setq mozc-candidate-style 'popup))
 
 (defun init-input-method-for-mac ()
   (setq default-input-method "MacOSX"))
@@ -184,19 +185,15 @@
 
 ;; elpyを設定します。
 
-(defun init-elpy-for-windows ()
-  (setq python-shell-completion-native-enable nil))
-
 (defun init-elpy ()
   (elpy-enable)
   (pyvenv-activate "~/Documents/Environments/python")
-  (if windows?
-      (init-elpy-for-windows)))
+  (setq python-shell-completion-native-enable nil))
 
 ;; enh-ruby-modeを設定します。
 
 (defun init-enh-ruby-mode ()
-  ;; (setq enh-ruby-program "/home/ryo/.rbenv/shims/ruby")
+  (setq enh-ruby-program "/home/ryo/.rbenv/shims/ruby")
   (add-to-list 'auto-mode-alist '("\\.rb$" . enh-ruby-mode))
   (add-to-list 'interpreter-mode-alist '("ruby" . enh-ruby-mode))
   (add-hook 'enh-ruby-mode-hook 'inf-ruby-minor-mode))
@@ -239,6 +236,6 @@
 ;; (init-clojure-mode)
 (init-js2-mode)
 (init-elpy)
-;; (init-enh-ruby-mode)
+(init-enh-ruby-mode)
 (init-c++-mode)
 (init-markdown-mode)
