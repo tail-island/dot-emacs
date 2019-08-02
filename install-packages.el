@@ -4,7 +4,8 @@
     haskell-mode
     helm
     js2-mode
-    markdown-mode))
+    markdown-mode
+    rust-mode))
 
 (defun install-packages ()
   (package-refresh-contents)
