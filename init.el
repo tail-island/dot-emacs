@@ -60,7 +60,7 @@
   (set-fontset-font nil 'japanese-jisx0208 (font-spec :family "Ricty Diminished")))
 
 (defun init-appearance-for-windows ()
-  (set-face-attribute 'default nil :family "VL Gothic" :height 96)   ; Windowsは、スケーリング1.25で運用します。96 * 1.25 = 120になって、全角と半角の比率が2:1になってキレイ。
+  (set-face-attribute 'default nil :family "Noto Sans Mono CJK JP Regular" :height 96)   ; Windowsは、スケーリング1.25で運用します。96 * 1.25 = 120になって、全角と半角の比率が2:1になってキレイ。
   (custom-set-faces
    '(default ((t (:background "black" :foreground "white"))))))
 
@@ -232,7 +232,7 @@
 (init-helm)
 
 (init-clojure-mode)
-(init-slime)
+;; (init-slime)
 (init-haskell-mode)
 (init-js2-mode)
 (init-elpy)
