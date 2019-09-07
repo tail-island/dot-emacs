@@ -13,7 +13,8 @@
 
 (defun init-package ()
   (require 'package)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+  (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+  (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
   (package-initialize))
 
 ;; PATHを設定します。
@@ -25,15 +26,14 @@
   (exec-path-from-shell-initialize))
 
 (defun init-exec-path ()
-  ;; (when linux?
-  ;;   (init-exec-path-for-linux))
+  (when linux?
+    (init-exec-path-for-linux))
   (when mac?
     (init-exec-path-for-mac)))
 
 ;; 言語を設定します。
 
 (defun set-language-for-mac ()
-  ;; (require 'ucs-normalize)
   (set-file-name-coding-system 'utf-8-hfs))
 
 (defun set-language-for-windows ()
@@ -108,11 +108,6 @@
   (define-key global-map (kbd "<mouse-7>") 'scroll-left)
   (put 'scroll-left 'disabled nil))
 
-(defun init-keyboard-for-mac ()
-  (define-key global-map (kbd "M-c") 'kill-ring-save)  ; Karabiner-ElementsがM-wをM-cに割り当てるので、再割当てします。
-  (setq ns-command-modifier   'meta)
-  (setq ns-alternate-modifier 'super))
-
 (defun init-keyboard ()
   (define-key global-map (kbd "RET") 'newline-and-indent)
   (define-key global-map (kbd "C-t") 'toggle-truncate-lines)
@@ -121,9 +116,7 @@
   (require 'dired)
   (define-key dired-mode-map (kbd "C-o") 'other-window)
   (when linux?
-    (init-keyboard-for-linux))
-  (when mac?
-    (init-keyboard-for-mac)))
+    (init-keyboard-for-linux)))
 
 ;; Input Methodを設定します。
 
@@ -154,6 +147,11 @@
 (defun init-helm ()
   (define-key global-map (kbd "C-;") 'helm-for-files)
   (put 'upcase-region 'disabled nil))
+
+;; slimeを設定します。
+
+(defun init-slime ()
+  (load (expand-file-name "~/.roswell/helper.el")))
 
 ;; haskell-modeを設定します。
 
@@ -224,7 +222,7 @@
             'markdown-mode-hook-handler))
 
 (init-package)
-;; (init-exec-path)
+(init-exec-path)
 (init-language)
 (init-appearance)
 (init-behavior)
@@ -232,24 +230,12 @@
 (init-keyboard)
 (init-input-method)
 (init-helm)
+
+(init-clojure-mode)
+(init-slime)
 (init-haskell-mode)
-;; (init-clojure-mode)
 (init-js2-mode)
 (init-elpy)
 (init-enh-ruby-mode)
 (init-c++-mode)
 (init-markdown-mode)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (markdown-mode js2-mode helm haskell-mode enh-ruby-mode elpy csharp-mode))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:background "black" :foreground "white")))))

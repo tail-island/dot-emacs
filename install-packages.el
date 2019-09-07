@@ -1,11 +1,14 @@
 (defvar packages
-  '(elpy
+  '(cider
+    elpy
     enh-ruby-mode
+    exec-path-from-shell
     haskell-mode
     helm
     js2-mode
     markdown-mode
-    rust-mode))
+    rust-mode
+    slime))
 
 (defun install-packages ()
   (package-refresh-contents)
@@ -15,7 +18,8 @@
 
 (defun init-package ()
   (require 'package)
-  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/"))
+  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")
+  (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
   (package-initialize))
 
 (init-package)
