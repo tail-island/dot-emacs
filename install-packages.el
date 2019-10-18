@@ -3,12 +3,10 @@
     elpy
     enh-ruby-mode
     exec-path-from-shell
-    haskell-mode
     helm
     js2-mode
     markdown-mode
-    rust-mode
-    slime))
+    rust-mode))
 
 (defun install-packages ()
   (package-refresh-contents)
