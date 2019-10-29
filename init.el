@@ -50,7 +50,7 @@
 ;; 見た目を設定します。
 
 (defun init-appearance-for-linux ()
-  (set-face-attribute 'default nil :family "Noto Sans Mono CJK JP" :height 160)  ; Linuxは、スケーリング1.0（もしくは0.875）で運用します。解像度が低い場合は120 * 0.875 = 105になって、全角と半角の比率が2:1になってキレイ。
+  (set-face-attribute 'default nil :family "Noto Sans Mono CJK JP" :height 120)
   (set-fontset-font (frame-parameter nil 'font) 'japanese-jisx0208 (font-spec :family "Noto Sans Mono CJK JP")))
 
 (defun init-appearance-for-mac ()
@@ -68,6 +68,7 @@
   (tool-bar-mode 0)
   (fringe-mode 0)
   (column-number-mode t)
+  (load-theme 'adwaita t)
   (setq inhibit-startup-message t)
   ;; (setq-default line-spacing 2)
   (when linux?
@@ -237,20 +238,3 @@
 (init-enh-ruby-mode)
 (init-c++-mode)
 (init-markdown-mode)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("59171e7f5270c0f8c28721bb96ae56d35f38a0d86da35eab4001aebbd99271a8" "8eafb06bf98f69bfb86f0bfcbe773b44b465d234d4b95ed7fa882c99d365ebfd" default)))
- '(package-selected-packages
-   (quote
-    (darcula-theme atom-one-dark-theme slime rust-mode markdown-mode js2-mode helm haskell-mode exec-path-from-shell enh-ruby-mode elpy cider))))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
