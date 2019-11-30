@@ -50,7 +50,7 @@
 ;; 見た目を設定します。
 
 (defun init-appearance-for-linux ()
-  (set-face-attribute 'default nil :family "Noto Sans Mono CJK JP" :height 105)
+  (set-face-attribute 'default nil :family "Noto Sans Mono CJK JP" :height 120)
   (set-fontset-font (frame-parameter nil 'font) 'japanese-jisx0208 (font-spec :family "Noto Sans Mono CJK JP")))
 
 (defun init-appearance-for-mac ()
