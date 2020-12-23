@@ -51,7 +51,9 @@
 
 (defun init-appearance-for-linux ()
   (set-face-attribute 'default nil :family "Noto Sans Mono CJK JP" :height 120)
-  (set-fontset-font (frame-parameter nil 'font) 'japanese-jisx0208 (font-spec :family "Noto Sans Mono CJK JP")))
+  (set-fontset-font (frame-parameter nil 'font) 'japanese-jisx0208 (font-spec :family "Noto Sans Mono CJK JP"))
+  (custom-set-faces
+   `(default ((t (:background "white" :foreground "black"))))))
 
 (defun init-appearance-for-mac ()
   (set-face-attribute 'default nil :family "Ricty Diminished" :height 120)
@@ -96,9 +98,9 @@
 ;; インデントを設定します。
 
 (defun init-indent ()
-  (setq c-basic-offset    2)
-  (setq css-indent-offset 2)
-  (setq js-indent-level   2))
+  (setq c-basic-offset    4)
+  (setq css-indent-offset 4)
+  (setq js-indent-level   4))
 
 ;; キーボードを設定します。
 
@@ -205,7 +207,7 @@
 
 (defun c++-mode-hook-handler ()
   (c-set-style "bsd")
-  (setq c-basic-offset 2))
+  (setq c-basic-offset 4))
 
 (defun init-c++-mode ()
   (add-hook 'c++-mode-hook
